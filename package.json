@@ -16,9 +16,10 @@
     "body-parser": "^1.18.2",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.3",
-    "nodemon": "^1.17.3"
+    "ws": "^5.1.1"
   },
   "devDependencies": {
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "nodemon": "^1.17.3"
   }
 }
