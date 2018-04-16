@@ -5,6 +5,7 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const MESSAGE_TYPES = {
     chain: 'CHAIN',
     transaction: 'TRANSACTION',
+    clearTransactions: 'CLEAR_TRANSACTIONS',
 };
 
 class P2pSever {
@@ -50,6 +51,9 @@ class P2pSever {
                 case MESSAGE_TYPES.transaction:
                     this.transactionPool.updateOrAddTransaction(data.transaction)
                     break;
+                case MESSAGE_TYPES.clearTransactions:
+                    this.transactionPool.clear();
+                    break;
                 default:
                     console.log(`Unknown message type: ${data.type}`);
             }
@@ -76,6 +80,12 @@ class P2pSever {
             type: MESSAGE_TYPES.transaction,
             transaction,
         }));
+    }
+
+    broadcastClearTransactions() {
+        this.sockets.forEach(socket => socket.send(JSON.stringify({
+            type: MESSAGE_TYPES.clearTransactions,
+        })));
     }
 }
 
